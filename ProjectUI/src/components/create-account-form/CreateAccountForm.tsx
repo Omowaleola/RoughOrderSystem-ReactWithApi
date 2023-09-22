@@ -19,17 +19,16 @@ import {CustomerViewModel} from "../../models/customer-view-model";
 export default function CreateAccountForm() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const emptyUser: CustomerViewModel = {  name: '', email: '', password: '' };
+  const emptyUser: CustomerViewModel = { id:'', name: '', email: '', password: '' };
   const formData = useRef(emptyUser);
 
   const onSubmit = useCallback(async (e: any) => {
     e.preventDefault();
-    const { email, password } = formData.current;
+    const { name,email, password  } = formData.current;
     setLoading(true);
 
-    const result = await createAccount(email, password);
+    const result = await createAccount(name,email, password);
     setLoading(false);
-
     if (result.isOk) {
       navigate('/login');
     } else {

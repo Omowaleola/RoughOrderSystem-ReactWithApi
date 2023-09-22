@@ -1,10 +1,10 @@
 import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
-import { getUser, signIn as sendSignInRequest } from '../api/auth';
+import { getUser, signIn as sendSignInRequest, signOut as signOutRequest } from '../api/auth';
 import type {  AuthContextType } from '../types';
-import {CustomerViewModel} from "../models/customer-view-model";
+import {CustomerLoggedInModel, CustomerViewModel} from "../models/customer-view-model";
 
 function AuthProvider(props: React.PropsWithChildren<unknown>) {
-  const [user, setUser] = useState<CustomerViewModel>();
+  const [user, setUser] = useState<CustomerLoggedInModel>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,7 +28,10 @@ function AuthProvider(props: React.PropsWithChildren<unknown>) {
   }, []);
 
   const signOut = useCallback(() => {
-    setUser(undefined);
+    const result = signOutRequest();
+    if(result.isOk){
+      setUser(undefined);
+    }
   }, []);
 
 

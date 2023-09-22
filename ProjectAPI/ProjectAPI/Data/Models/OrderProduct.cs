@@ -17,6 +17,8 @@ public partial class OrderProduct
     [StringLength(255)]
     public string ProductId { get; set; } = null!;
 
+    public int Quantity { get; set; }
+
     [ForeignKey("OrderId")]
     [InverseProperty("OrderProducts")]
     public virtual Order Order { get; set; } = null!;

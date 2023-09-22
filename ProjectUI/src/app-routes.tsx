@@ -1,4 +1,4 @@
-import {HomePage, OrdersPage, ProductsPage} from './pages';
+import {AddOrderPage,  HomePage, OrdersPage, ProductsPage} from './pages';
 import { withNavigationWatcher } from './contexts/navigation';
 
 const routes = [
@@ -13,6 +13,15 @@ const routes = [
     {
         path: '/home',
         element: HomePage
+    }
+    ,
+    {
+        path: '/addOrder',
+        element: AddOrderPage
+    },
+    {
+        path: '/order',
+        element: AddOrderPage
     }
 ];
 

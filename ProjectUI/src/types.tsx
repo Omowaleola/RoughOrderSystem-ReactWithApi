@@ -1,7 +1,7 @@
 import { TreeViewTypes } from 'devextreme-react/tree-view';
 import { ButtonTypes } from 'devextreme-react/button';
 import React from 'react';
-import {CustomerViewModel} from "./models/customer-view-model";
+import {CustomerLoggedInModel, CustomerViewModel} from "./models/customer-view-model";
 
 export interface HeaderProps {
     menuToggleEnabled: boolean;
@@ -23,8 +23,9 @@ export interface UserPanelProps {
 
 
 export type AuthContextType = {
-    user?: CustomerViewModel;
-    signIn: (email: string, password: string) => Promise<{isOk: boolean, data?: CustomerViewModel, message?: string}>;
+    user?: CustomerLoggedInModel;
+    numProducts ?: number;
+    signIn: (email: string, password: string) => Promise<{isOk: boolean, data?: CustomerLoggedInModel, message: string}>;
     signOut: () => void;
     loading: boolean;
 }

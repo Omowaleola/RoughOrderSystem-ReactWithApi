@@ -22,11 +22,13 @@ CREATE TABLE Customer
 CREATE TABLE Orders
 (
 	Id NVARCHAR(255) NOT NULL,
+	OrderNo NVARCHAR(300) NOT NULL,
 	Paid BIT NOT NULL DEFAULT 0,
 	CustomerId NVARCHAR(255) NOT NULL,
 	Total Float NOT NULL,
 	CreatedOn DATETIME NOT NULL,
 	CONSTRAINT PK_Orders_Id PRIMARY KEY (Id),
+	CONSTRAINT UK_Orders_OrderNo UNIQUE (OrderNo),
 	CONSTRAINT FK_Orders_CustomerId_Customer_Id FOREIGN KEY (CustomerId) REFERENCES Customer(Id)
 )
 
@@ -35,6 +37,7 @@ CREATE TABLE OrderProducts
 	Id INT IDENTITY(1,1) NOT NULL,
 	OrderId NVARCHAR(255) NOT NULL,
 	ProductId NVARCHAR(255) NOT NULL,
+	Quantity INT NOT NULL,
 	CONSTRAINT PK_OrderProducts_Id PRIMARY KEY (Id),
 	CONSTRAINT FK_OrderProducts_OrderId_Orders_Id FOREIGN KEY (OrderId) REFERENCES Orders(Id),
 	CONSTRAINT FK_OrderProducts_ProductId_Orders_Id FOREIGN KEY (ProductId) REFERENCES Product(Id)

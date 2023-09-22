@@ -6,11 +6,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProjectAPI.Data.Models;
 
+[Microsoft.EntityFrameworkCore.Index("OrderNo", Name = "UK_Orders_OrderNo", IsUnique = true)]
 public partial class Order
 {
     [Key]
     [StringLength(255)]
     public string Id { get; set; } = null!;
+
+    [StringLength(300)]
+    public string OrderNo { get; set; } = null!;
 
     public bool Paid { get; set; }
 

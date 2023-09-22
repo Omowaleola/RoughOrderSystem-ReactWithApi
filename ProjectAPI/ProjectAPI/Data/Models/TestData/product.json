@@ -1,0 +1,92 @@
+[
+ {
+   "id": "",
+   "name": "The Quantified Cactus: An Easy Plant Soil Moisture Sensor",
+   "description": "This project is a good learning project to get comfortable with soldering and programming an Arduino.",
+   "price": 100
+ },
+ {
+   "id": "",
+   "name": "A beautiful switch-on book light",
+   "description": "Use craft items you have around the house, plus two LEDs and a LilyPad battery holder, to create a useful book light for reading in the dark.",
+   "price": 300
+ },
+ {
+   "id": "",
+   "name": "Bling your Laptop with an Internet-Connected Light Show",
+   "description": "Create a web-connected light-strip API controllable from your website, using the Particle.io.",
+   "price": 200
+ },
+ {
+   "id": "",
+   "name": "Create a Compact Survival Kit with LED Track Lighting",
+   "description": "Use an Altoids tin with Chibitronics sticker LEDs to create a light-up compact that doubles as a survival kit for the young hipster",
+   "price": 520
+ },
+ {
+   "id": "",
+   "name": "Bubblesort Visualization",
+   "description": "Visualization of sailor scouts sorted by bubblesort algorithm by their planet's distance from the sun",
+   "price": 280
+ },
+ {
+   "id": "",
+   "name": "Light-up Corsage",
+   "description": "Light-up corsage I made with my summer intern.",
+   "price": 100
+ },
+ {
+   "id": "",
+   "name": "Pastel hardware kit",
+   "description": "Pastel hardware kits complete with custom manufactured pastel alligator clips.",
+   "price": 450
+ },
+ {
+   "id": "",
+   "name": "Heart-shaped LED",
+   "description": "custom molded heart shaped LED with sprinkles.",
+   "price": 253
+ },
+ {
+   "id": "",
+   "name": "Black Sweatshirt",
+   "description": "Black sweatshirt hoody with the Sick of the Internet logo.",
+   "price": 152
+ },
+ {
+   "id": "",
+   "name": "Sick of the Internet Pins",
+   "description": "Still some time to enter the pin/sticker giveaway! ",
+   "price": 231
+ },
+ {
+   "id": "",
+   "name": "Hipster Dev",
+   "description": "Hipster Dev is busy coding away while styled in a camo jacket and orange beanie.",
+   "price": 222
+ },
+ {
+   "id": "",
+   "name": "Pretty Girls Code Tee",
+   "description": "Everyone�s favorite design is finally here on a tee! The Pretty Girls Code crew-neck tee is available in a soft pink with red writing.",
+   "price": 541
+ },
+ {
+   "id": "",
+   "name": "Ruby Sis",
+   "description": "Styled in a dashiki, Ruby Sis is listening to music while coding in her favorite language, Ruby!",
+   "price": 523
+ },
+ {
+   "id": "",
+   "name": "Holographic Dark Moon Necklace",
+   "description": "Not sure if I'll be making more, get it while I have it in the store.",
+   "price": 522
+ },
+ {
+   "id": "",
+   "name": "Floppy Crop",
+   "description": "Used up the Diskette fabric today to make 2 of these crops.",
+   "price": 552
+ }
+]
