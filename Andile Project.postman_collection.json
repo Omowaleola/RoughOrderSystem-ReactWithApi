@@ -1,0 +1,660 @@
+{
+	"info": {
+		"_postman_id": "ded1a8fa-3605-498c-b5cd-106fd7ec0a4c",
+		"name": "Andile Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13332295"
+	},
+	"item": [
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Create Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Product search after creation should ensure the created product exists\", function () {",
+									"    pm.sendRequest({",
+									"        url: 'localhost:5000/products',",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json'",
+									"        },",
+									"        body: {",
+									"            mode: 'json',",
+									"            'raw': JSON.stringify({",
+									"                \"ids\": []",
+									"            })",
+									"        }",
+									"    }, function (err, res) {",
+									"        var requestData = JSON.parse(pm.request.body.raw);",
+									"        var products = res.json();",
+									"",
+									"        var filtered = products.filter((product) => product.name === requestData.name);",
+									"",
+									"        pm.expect(filtered).to.have.lengthOf.at.least(1);",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Some Product 8\",\n    \"description\": \"Some description\",\n    \"price\": 123.4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/product",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response contains an object with the key 'product'\", function () {",
+									"    pm.expect(pm.response.json()).that.is.an('object');",
+									"});",
+									"",
+									"pm.test(\"Each field in the 'product' object has a value\", function () {",
+									"    var product = pm.response.json();",
+									"    for (var key in product) {",
+									"        pm.expect(product[key]).to.exist;",
+									"        pm.expect(product[key]).not.to.be.equals(null);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/product/Product-638310072977884927",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product",
+								"Product-638310072977884927"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Product search after deletion should ensure the deleted product no longer exists\", function () {",
+									"    pm.sendRequest({",
+									"        url: 'localhost:5000/products',",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json'",
+									"        },",
+									"        body: {",
+									"            mode: 'json',",
+									"            'raw': JSON.stringify({",
+									"                \"ids\": []",
+									"            })",
+									"        }",
+									"    }, function (err, res) {",
+									"        var requestData = JSON.parse(pm.request.body.raw);",
+									"        var deletedProductIds = requestData.ids;",
+									"        var products = res.json();",
+									"",
+									"        products.forEach((product) => {",
+									"            pm.expect(deletedProductIds).to.not.include(product.id);",
+									"        });",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ids\": [\"Product-638311989436117597\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/remove-products",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"remove-products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"At least one object exists in the list of products\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array').and.to.have.lengthOf.at.least(1);",
+									"});",
+									"",
+									"pm.test(\"Each product is fully populated\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    responseData.forEach((product) => {",
+									"        for (var key in product) {",
+									"            pm.expect(product[key]).to.exist;",
+									"            pm.expect(product[key]).not.to.be.equals(null)",
+									"        }",
+									"    });",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ids\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/products",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Search for the updated product using the id parameter and ensure the fields specified in the request body have been updated\", function () {",
+									"    var requestData = JSON.parse(pm.request.body.raw);",
+									"    console.log(pm.response)",
+									"    var responseData = pm.response.json();",
+									"",
+									"    pm.sendRequest({",
+									"        url: 'localhost:5000/product/' + responseData.id,",
+									"        method: 'GET',",
+									"        header: {",
+									"            'Content-Type': 'application/json'",
+									"        }",
+									"    }, function (err, response) {",
+									"        pm.expect(err).to.be.null; // Check if there is no error",
+									"        var responseBody = response.json();",
+									"        var updatedProduct = responseBody;",
+									"",
+									"        Object.keys(requestData).forEach((field) => {",
+									"            pm.expect(updatedProduct[field]).to.equal(requestData[field]);",
+									"        })",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"Product-638311971723522370\",\n    \"name\": \"Some New Name For Product\",\n    \"description\": \"Some Other Description\",\n    \"price\": 50.67\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/product/Product-638311971723522370",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product",
+								"Product-638311971723522370"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Create Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Product search after creation should ensure the created customer exists\", function () {",
+									"    pm.sendRequest({",
+									"        url: 'localhost:5000/customers',",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json'",
+									"        },",
+									"        body: {",
+									"            mode: 'json',",
+									"            'raw': JSON.stringify({",
+									"                \"ids\": []",
+									"            })",
+									"        }",
+									"    }, function (err, res) {",
+									"        var requestData = JSON.parse(pm.request.body.raw);",
+									"        var customers = res.json();",
+									"",
+									"        var filtered = customers.filter((customer) => customer.email === customer.email);",
+									"",
+									"        pm.expect(filtered).to.have.lengthOf.at.least(1);",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Customer 12\",\n    \"email\": \"customer05@gmail.com\",\n    \"password\": \"Happy\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/customer",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Product search after deletion should ensure the deleted customer does not exist\", function () {",
+									"    pm.sendRequest({",
+									"        url: 'localhost:5000/customers',",
+									"        method: 'POST',",
+									"        header: {",
+									"            'Content-Type': 'application/json'",
+									"        },",
+									"        body: {",
+									"            mode: 'json',",
+									"            raw: JSON.stringify({",
+									"                \"ids\": []",
+									"            })",
+									"        }",
+									"    }, function (err, res) {",
+									"        pm.expect(err).to.be.null;",
+									"",
+									"        const currentUrl = pm.request.url.toString();",
+									"        const regex = /\\/customer\\/([-\\w]+)$/;",
+									"        const match = currentUrl.match(regex);",
+									"        console.log(res)",
+									"        if (match && match.length === 2) {",
+									"            pm.variables.set(\"customerId\", match[1]);",
+									"        }",
+									"",
+									"        pm.expect(pm.variables.get(\"customerId\")).not.to.be.empty;",
+									"        var customers = res.json();",
+									"        var filtered = customers.filter((customer) => customer.id === pm.variables.get(\"customerId\"));",
+									"",
+									"        pm.expect(filtered).to.have.lengthOf(0);",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/customer/Customer-638311990629454301",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"customer",
+								"Customer-638311990629454301"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Create Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customerId\": \"Customer-243\",\n    \"products\": [\n        {\n            \"productId\": \"Product-638310072977884913\",\n            \"quantity\": 10\n        },\n        {\n            \"productId\": \"Product-638310072977884919\",\n            \"quantity\": 10\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/order",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Search for the updated order using the id parameter and ensure the fields specified in the request body have been updated\", function () {",
+									"    const currentUrl = pm.request.url.toString();",
+									"    const regex = /\\/order\\/([-\\w]+)$/;",
+									"    const match = currentUrl.match(regex);",
+									"  ",
+									"",
+									"    if (match && match.length === 2) {",
+									"        pm.variables.set(\"orderId\", match[1]);",
+									"        ",
+									"    }",
+									"     ",
+									"",
+									"    pm.expect(pm.variables.get(\"orderId\")).not.to.be.empty;",
+									"",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:5000/order/' + pm.variables.get(\"orderId\"),",
+									"        method: 'GET',",
+									"        header: {",
+									"            'Content-Type': 'application/json'",
+									"        }",
+									"    }, function (err, response) {",
+									"        pm.expect(err).to.be.null;",
+									"        ",
+									"        var requestData = JSON.parse(pm.request.body.raw);",
+									"        var responseData = response.json();",
+									"        var updatedOrder = responseData;",
+									"",
+									"        ",
+									"",
+									"        Object.keys(requestData).forEach((field) => {",
+									"           ",
+									"            pm.expect(updatedOrder[\"id\"]).to.equal(requestData[\"orderId\"]);",
+									"        });",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderId\": \"Order-638311936509639582\",\n    \"customerId\": \"Customer-243\",\n    \"products\": [\n        {\n            \"productId\": \"Product-638310072977884913\",\n            \"quantity\": 10\n        },\n        {\n            \"productId\": \"Product-638310072977884919\",\n            \"quantity\": 10\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/order/Order-638311936509639582",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order",
+								"Order-638311936509639582"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"console.log(pm.response.json())",
+									"",
+									"pm.test(\"Response contains an object with the key 'order'\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('object').that.has.property('orderNo');",
+									"});",
+									"",
+									"pm.test(\"Each field in the 'order' object has a value\", function () {",
+									"    var order = pm.response.json().order;",
+									"    for (var key in order) {",
+									"        pm.expect(order[key]).to.exist;",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/order/Order-638310953257182104",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order",
+								"Order-638310953257182104"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"console.log(pm.response.json())",
+									"",
+									"pm.test(\"At least one object exists in the list of orders\", function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array').and.to.have.lengthOf.at.least(1);",
+									"});",
+									"",
+									"pm.test(\"Each order is fully populated\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    responseData.forEach((order) => {",
+									"        for (var key in order) {",
+									"            pm.expect(order[key]).to.exist;",
+									"            pm.expect(order[key]).not.to.be.equals(null)",
+									"        }",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ids\": [\"Order-638310838765600221\"],\n    \"customerId\": \"Customer-243\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

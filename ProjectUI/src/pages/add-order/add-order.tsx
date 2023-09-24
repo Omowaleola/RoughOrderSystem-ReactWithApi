@@ -17,6 +17,7 @@ import {UserType} from "../../models/user-type";
 import {GetProducts, UpdateProduct} from "../../api/products";
 import notify from "devextreme/ui/notify";
 import {useLocation, useNavigate} from "react-router-dom";
+import LoadPanel from "devextreme-react/load-panel";
 
 export default function AddOrder() {
     const [products, setProducts] = useState<ProductViewModel[]>();
@@ -32,6 +33,7 @@ export default function AddOrder() {
     
     
     const CreateOrder = async () => {
+        setLoading(true);
         const order: OrderSavingModel =
             {
                 customerId: user?.id,
@@ -40,9 +42,9 @@ export default function AddOrder() {
         const result = await InsertOrder(order);
         if (result.isOk) {
             ClearSavedOrderProducts();
-            navigate('/orders')
             setLoading(false);
-
+            navigate('/orders')
+            notify('Order Added Successfully', 'success', 3000);
         } else {
             notify(result.data, 'error', 2000);
         }
@@ -73,10 +75,11 @@ export default function AddOrder() {
         {
             setLoading(false);
             navigate('/orders')
+            notify('Order Edited Successfully', 'success', 3000);
             
         }else {
             setLoading(false);
-            notify(result.data, 'error', 2000);
+            notify(result.data, 'error', 3000);
         }
         
     }
@@ -106,6 +109,9 @@ export default function AddOrder() {
     }, [GetOrder, GetProducts,  ]);
     return (
         <React.Fragment>
+            <LoadPanel
+                visible={loading}
+            />
             {(isEdit) && <h6>Edit Order</h6>}
             {isAdd && <h6> Add Order</h6>}
             {isView && <h6>View Order</h6>}

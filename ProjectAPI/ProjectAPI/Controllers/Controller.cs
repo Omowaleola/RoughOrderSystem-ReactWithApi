@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using ProjectAPI.Data;
 using ProjectAPI.Data.Models;
@@ -32,7 +33,7 @@ public class Controller : ControllerBase
     #region Products
 
     [HttpPost("product")]
-    public ActionResult<ProductViewModel> AddProduct(ProductViewModel model)
+    public ActionResult<ProductViewModel> AddProduct(ProductSavingModel model)
     {
         if (context.Products.Any(p => p.Name == model.Name))
         {
@@ -42,11 +43,10 @@ public class Controller : ControllerBase
         var product = GenerateDbProduct(model);
         context.Products.Add(product);
         context.SaveChanges();
-        model.Id = product.Id;
-        return model;
+        return mapper.Map<ProductViewModel>(product);
     }
 
-    private Product GenerateDbProduct(ProductViewModel model)
+    private Product GenerateDbProduct(ProductSavingModel model)
     {
         var product = new Product
         {
@@ -59,25 +59,29 @@ public class Controller : ControllerBase
     }
 
     [HttpPost("remove-products")]
-    public IActionResult RemoveProducts(List<string> ids)
+    public IActionResult RemoveProducts(ProductDeletingModel model)
     {
-        if (ids.Any(id => !context.Products.Any(p => p.Id == id)))
+        if (model.Ids == null)
+        {
+            return BadRequest("No Products To Delete");
+        }
+        if (model.Ids != null && model.Ids.Any(id => !context.Products.Any(p => p.Id == id)))
         {
             return BadRequest("One or More Ids don't exist in the system");
         }
 
-        var productsToRemove = context.Products.Where(p => ids.Contains(p.Id)).Select(p => p);
+        var productsToRemove = context.Products.Where(p => model.Ids.Contains(p.Id)).Select(p => p);
         context.Products.RemoveRange(productsToRemove);
         context.SaveChanges();
         return Ok();
     }
 
     [HttpPost("products")]
-    public ActionResult<List<ProductViewModel>> GetProducts(List<string>? ids)
+    public ActionResult<List<ProductViewModel>> GetProducts(RequestModel model)
     {
-        var allProducts = ids == null || ids.Count == 0;
+        var allProducts = model.Ids == null || model.Ids.Count == 0;
         var products = context.Products
-            .Where(p => allProducts || (ids != null && ids.Contains(p.Id)))
+            .Where(p => allProducts || (model.Ids != null && model.Ids.Contains(p.Id)))
             .Select(p => p)
             .ToList();
         return mapper.Map<List<ProductViewModel>>(products);
@@ -114,7 +118,7 @@ public class Controller : ControllerBase
         product.Price = model.Price;
 
         context.SaveChanges();
-        return Ok();
+        return mapper.Map<ProductViewModel>(product);
     }
 
     #endregion
@@ -368,6 +372,24 @@ public class Controller : ControllerBase
         };
         return loggedInModel;
     }
+    
+    
+    [HttpPost("customers")]
+    public ActionResult<List<CustomerReturnModel>> GetCustomers(RequestModel model)
+    {
+        var allCustomers = model.Ids == null || model.Ids.Count == 0;
+        var customers = context.Customers
+            .Where(customer => allCustomers || (model.Ids != null && model.Ids.Contains(customer.Id)))
+            .Select(c => new CustomerReturnModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Email = c.Email
+            })
+            .ToList();
+        return mapper.Map<List<CustomerReturnModel>>(customers);
+    }
 
     #endregion
 }
+

@@ -6,6 +6,12 @@
     password : string;
     userRole ?: number;
 }
+export interface CustomerReturnModel
+{
+    id : string;
+    name : string;
+    email : string;
+}
 export interface CustomerLoggedInModel
 {
     id : string;

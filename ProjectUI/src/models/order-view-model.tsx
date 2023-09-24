@@ -33,11 +33,6 @@ export interface OrderProductSavingModel {
     quantity: number;
 }
 
-export interface OrderProductSavingModel {
-
-    productId: string;
-    quantity: number;
-}
 
 export interface OrderProductModel {
     id: number;

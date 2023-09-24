@@ -47,6 +47,8 @@ export default function Home() {
         } else {
             SaveOrderProduct([orderProd]);
         }
+        notify('Product added to Wish List', 'success', 3000);
+        
     };
     const popupContent = () => {
         return (<form onSubmit={addProductToWishList}>

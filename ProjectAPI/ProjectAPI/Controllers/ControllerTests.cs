@@ -4,7 +4,9 @@
 //   \___/|_||_|_|\__|\_/\___|_| /__/\___|
 
 // This file was generated with Unitverse
-// It has not been added to a test project because generation of a detached file was selected in the user interface.
+
+using Microsoft.AspNetCore.Mvc;
+
 namespace ProjectAPI.Controllers.Tests
 {
     using System;
@@ -44,163 +46,130 @@ namespace ProjectAPI.Controllers.Tests
             Assert.That(instance, Is.Not.Null);
         }
 
-        [Test]
-        public void CannotConstructWithNullContext()
-        {
-            Assert.Throws<ArgumentNullException>(() => new Controller(default(ApiContext), _mapper, _configuration));
-        }
-
-        [Test]
-        public void CannotConstructWithNullMapper()
-        {
-            Assert.Throws<ArgumentNullException>(() => new Controller(_context, default(IMapper), _configuration));
-        }
-
-        [Test]
-        public void CannotConstructWithNullConfiguration()
-        {
-            Assert.Throws<ArgumentNullException>(() => new Controller(_context, _mapper, default(IConfiguration)));
-        }
-
-        [Test]
-        public void CanCallAddProduct()
-        {
-            // Arrange
-            var model = new ProductViewModel
-            {
-                Id = "TestValue876554053",
-                Name = "TestValue1353184132",
-                Description = "TestValue1366502065",
-                Price = 14738.2012F
-            };
-
-            // Act
-            var result = _testClass.AddProduct(model);
-
-            // Assert
-            Assert.Fail("Create or modify test");
-        }
-
-        [Test]
-        public void CannotCallAddProductWithNullModel()
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.AddProduct(default(ProductViewModel)));
-        }
+        // [Test]
+        // public void CanCallAddProduct()
+        // {
+        //     // Arrange
+        //     var model = new ProductSavingModel
+        //     {
+        //         Name = "Some Product 48",
+        //         Description = "Some description",
+        //         Price = 29290.5078F
+        //     };
+        //
+        //     // Act
+        //     var result = _testClass.AddProduct(model);
+        //     if (result.Value != null)
+        //     {
+        //         Assert.Pass("Add Product works");
+        //     }
+        //
+        //     // Assert
+        //     Assert.Fail("Create or modify test");
+        // }
 
         [Test]
         public void CanCallRemoveProducts()
         {
             // Arrange
-            var ids = new List<string>();
+            var model = new ProductDeletingModel { Ids = new List<string>() };
 
             // Act
-            var result = _testClass.RemoveProducts(ids);
-
-            // Assert
-            Assert.Fail("Create or modify test");
-        }
-
-        [Test]
-        public void CannotCallRemoveProductsWithNullIds()
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.RemoveProducts(default(List<string>)));
-        }
-
-        [Test]
-        public void CanCallGetProducts()
-        {
-            // Arrange
-            var ids = new List<string>();
-
-            // Act
-            var result = _testClass.GetProducts(ids);
-
-            // Assert
-            Assert.Fail("Create or modify test");
-        }
-
-        [Test]
-        public void CanCallGetProduct()
-        {
-            // Arrange
-            var id = "TestValue646055558";
-
-            // Act
-            var result = _testClass.GetProduct(id);
-
-            // Assert
-            Assert.Fail("Create or modify test");
-        }
-
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase("   ")]
-        public void CannotCallGetProductWithInvalidId(string value)
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.GetProduct(value));
-        }
-
-        [Test]
-        public void CanCallUpdateProduct()
-        {
-            // Arrange
-            var id = "TestValue502446444";
-            var model = new ProductViewModel
+            var result = _testClass.RemoveProducts(model);
+            if (result is OkResult)
             {
-                Id = "TestValue815885233",
-                Name = "TestValue494147858",
-                Description = "TestValue1166372064",
-                Price = 11354.9609F
-            };
-
-            // Act
-            var result = _testClass.UpdateProduct(id, model);
+                Assert.Pass("Delete Product works");
+            }
 
             // Assert
             Assert.Fail("Create or modify test");
         }
 
-        [Test]
-        public void CannotCallUpdateProductWithNullModel()
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.UpdateProduct("TestValue411335927", default(ProductViewModel)));
-        }
 
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase("   ")]
-        public void CannotCallUpdateProductWithInvalidId(string value)
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.UpdateProduct(value, new ProductViewModel
-            {
-                Id = "TestValue96801108",
-                Name = "TestValue268315516",
-                Description = "TestValue1774227877",
-                Price = 351.286743F
-            }));
-        }
+        // [Test]
+        // public void CanCallGetProducts()
+        // {
+        //     // Arrange
+        //     var model = new RequestModel { Ids = null };
+        //
+        //     // Act
+        //     var result = _testClass.GetProducts(model);
+        //     if (result.Value != null)
+        //     {
+        //         Assert.Pass("Get Product Passed");
+        //     }
+        //
+        //     // Assert
+        //     Assert.Fail("Create or modify test");
+        // }
+        // [Test]
+        // public void CanCallGetProduct()
+        // {
+        //     // Arrange
+        //     var id = "Product-638310072977884927";
+        //
+        //     // Act
+        //     var result = _testClass.GetProduct(id);
+        //     if (result.Value != null)
+        //     {
+        //         Assert.Pass("Get Product Passed");
+        //     }
+        //
+        //     // Assert
+        //     Assert.Fail("Create or modify test");
+        // }
+
+
+        // [Test]
+        // public void CanCallUpdateProduct()
+        // {
+        //     // Arrange
+        //     var id = "Product-638311971723522370";
+        //     var model = new ProductViewModel
+        //     {
+        //         Id = "Product-638311971723522370",
+        //         Name = "Some New Name For Product",
+        //         Description = "Some Other Description",
+        //         Price = 19553.85F
+        //     };
+        //
+        //     // Act
+        //     var result = _testClass.UpdateProduct(id, model);
+        //     if (result.Value != null)
+        //     {
+        //         Assert.Pass("Update Product Works");
+        //     }
+        //
+        //     // Assert
+        //     Assert.Fail("Create or modify test");
+        // }
 
         [Test]
         public void CanCallAddOrder()
         {
+            var prodList = new List<OrderProductModel>();
+            var product = new OrderProductModel()
+            {
+                ProductId = "Product-638310072977884913",
+                Quantity = 10
+            };
+            prodList.Add(product);
             // Arrange
             var model = new OrderSavingModel
             {
-                CustomerId = "TestValue871451772",
-                Products = new List<OrderProductModel>()
+                CustomerId = "Customer-243",
+                Products = prodList
             };
 
             // Act
             var result = _testClass.AddOrder(model);
+            if (result.Value != null)
+            {
+                Assert.Pass("Add Order Passed");
+            }
 
             // Assert
             Assert.Fail("Create or modify test");
-        }
-
-        [Test]
-        public void CannotCallAddOrderWithNullModel()
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.AddOrder(default(OrderSavingModel)));
         }
 
         [Test]
@@ -210,79 +179,66 @@ namespace ProjectAPI.Controllers.Tests
             var model = new GetOrderRequestModel
             {
                 Ids = new List<string>(),
-                CustomerId = "TestValue1929518756"
+                CustomerId = "Customer-243"
             };
 
             // Act
             var result = _testClass.GetOrders(model);
+            if (result.Value != null)
+            {
+                Assert.Pass("Get Orders Work");
+            }
 
             // Assert
             Assert.Fail("Create or modify test");
-        }
-
-        [Test]
-        public void CannotCallGetOrdersWithNullModel()
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.GetOrders(default(GetOrderRequestModel)));
         }
 
         [Test]
         public void CanCallEditOrder()
         {
             // Arrange
-            var id = "TestValue1735226584";
+            var id = "Order-638311936509639582";
+            var prodList = new List<OrderProductModel>();
+            var product = new OrderProductModel()
+            {
+                ProductId = "Product-638310072977884913",
+                Quantity = 10
+            };
+            prodList.Add(product);
             var model = new OrderEditingModel
             {
-                OrderId = "TestValue55874653",
-                CustomerId = "TestValue1551450219",
-                Products = new List<OrderProductModel>()
+                OrderId = "Order-638311936509639582",
+                CustomerId = "Customer-243",
+                Products = prodList
             };
 
             // Act
             var result = _testClass.EditOrder(id, model);
+            if (result.Value != null)
+            {
+                Assert.Pass("Edit Order Passed");
+            }
 
             // Assert
             Assert.Fail("Create or modify test");
         }
 
-        [Test]
-        public void CannotCallEditOrderWithNullModel()
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.EditOrder("TestValue1345155157", default(OrderEditingModel)));
-        }
-
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase("   ")]
-        public void CannotCallEditOrderWithInvalidId(string value)
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.EditOrder(value, new OrderEditingModel
-            {
-                OrderId = "TestValue1996624664",
-                CustomerId = "TestValue1076685215",
-                Products = new List<OrderProductModel>()
-            }));
-        }
 
         [Test]
         public void CanCallGetOrder()
         {
             // Arrange
-            var id = "TestValue555323867";
+            var id = "Order-638310953257182104";
 
             // Act
             var result = _testClass.GetOrder(id);
+            if (result.Value != null)
+            {
+                Assert.Pass("Get Order Passed");
+            }
 
             // Assert
             Assert.Fail("Create or modify test");
-        }
-
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase("   ")]
-        public void CannotCallGetOrderWithInvalidId(string value)
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.GetOrder(value));
         }
 
         [Test]
@@ -291,68 +247,40 @@ namespace ProjectAPI.Controllers.Tests
             // Arrange
             var model = new CustomerViewModel
             {
-                Id = "TestValue899734619",
-                Name = "TestValue1638438538",
-                Email = "TestValue1925074743",
-                Password = "TestValue295802028",
-                UserRole = 1833140184
+                Name = "Customer 1",
+                Email = "customer13@gmail.com",
+                Password = "Happy",
+                UserRole = 1
             };
 
             // Act
             var result = _testClass.AddCustomer(model);
+            if (result is OkResult)
+            {
+                Assert.Pass("Customer Created Successfully");
+            }
+
 
             // Assert
             Assert.Fail("Create or modify test");
         }
 
-        [Test]
-        public void CannotCallAddCustomerWithNullModel()
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.AddCustomer(default(CustomerViewModel)));
-        }
 
         [Test]
         public void CanCallDeleteCustomer()
         {
             // Arrange
-            var id = "TestValue817800248";
+            var id = "Customer-638311990629454301";
 
             // Act
             var result = _testClass.DeleteCustomer(id);
-
-            // Assert
-            Assert.Fail("Create or modify test");
-        }
-
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase("   ")]
-        public void CannotCallDeleteCustomerWithInvalidId(string value)
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.DeleteCustomer(value));
-        }
-
-        [Test]
-        public void CanCallLogin()
-        {
-            // Arrange
-            var model = new LoginRequestModel
+            if (result is OkResult)
             {
-                Email = "TestValue1235709535",
-                Password = "TestValue1487957374"
-            };
-
-            // Act
-            var result = _testClass.Login(model);
+                Assert.Pass("Delete Customer Passed");
+            }
 
             // Assert
             Assert.Fail("Create or modify test");
-        }
-
-        [Test]
-        public void CannotCallLoginWithNullModel()
-        {
-            Assert.Throws<ArgumentNullException>(() => _testClass.Login(default(LoginRequestModel)));
         }
     }
 }

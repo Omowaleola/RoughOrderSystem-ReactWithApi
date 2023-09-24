@@ -9,6 +9,13 @@ public class CustomerViewModel
     public int? UserRole { get; set; }
 }
 
+public class CustomerReturnModel
+{
+    public string? Id { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+}
+
 public class CustomerLoggedInModel
 {
     public string Id { get; set; }

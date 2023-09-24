@@ -25,7 +25,7 @@ export default function Products() {
     const [isPopupVisible, setPopupVisibility] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<ProductViewModel>(null);
     const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
-    const emptyProduct: ProductViewModel = {id: '', name: '', description: '', price: 0};
+    const emptyProduct: ProductViewModel = { name: '', description: '', price: 0};
 
     const AddProduct = async (e) => {
         setLoading(true);
@@ -35,13 +35,14 @@ export default function Products() {
             const getResult = await GetProducts();
             if (getResult.isOk) {
                 setProducts(getResult.data);
+                notify('Product Added Successfully', 'success', 3000);
             } else {
-                notify(getResult.data, 'error', 2000);
+                notify(getResult.data, 'error', 3000);
             }
             setLoading(false);
 
         } else {
-            notify(result.data, 'error', 2000);
+            notify(result.data, 'error', 3000);
         }
         setLoading(false);
     };
@@ -51,13 +52,15 @@ export default function Products() {
             const getResult = await GetProducts();
             if (getResult.isOk) {
                 setProducts(getResult.data);
+                notify('Product Deleted Successfully', 'success', 3000);
+                
             } else {
-                notify(getResult.data, 'error', 2000);
+                notify(getResult.data, 'error', 3000);
             }
             setLoading(false);
 
         } else {
-            notify(result.data, 'error', 2000);
+            notify(result.data, 'error', 3000);
         }
         setLoading(false);
 
@@ -70,13 +73,14 @@ export default function Products() {
             const getResult = await GetProducts();
             if (getResult.isOk) {
                 setProducts(getResult.data);
+                notify('Product Edited Successfully', 'success', 3000);
             } else {
-                notify(getResult.data, 'error', 2000);
+                notify(getResult.data, 'error', 3000);
             }
             setLoading(false);
 
         } else {
-            notify(result.data, 'error', 2000);
+            notify(result.data, 'error', 3000);
         }
         setLoading(false);
     };
@@ -108,6 +112,7 @@ export default function Products() {
         } else {
             SaveOrderProduct([orderProd]);
         }
+        notify('Product added to Wish List', 'success', 3000);
     };
 
     const popupContent = () => {
@@ -137,7 +142,7 @@ export default function Products() {
             if (result.isOk) {
                 setProducts(result.data);
             } else {
-                notify(result.data, 'error', 2000);
+                notify(result.data, 'error', 3000);
             }
             setLoading(false);
         })();

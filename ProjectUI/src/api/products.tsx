@@ -1,9 +1,13 @@
-﻿import {ProductViewModel} from "../models/product-view-model";
+﻿import {ProductDeletingModel, ProductSavingModel, ProductViewModel, RequestModel} from "../models/product-view-model";
 import axios from "../utils/axiosConfig";
 import {GetErrorMessage} from "../utils/constants-and-methods";
 
 export async function GetProducts(ids ?: string[]) {
-    return axios.post(`/products`, ids??[]).then(response => {
+    const model : RequestModel =
+        {
+            ids: ids??[]
+        };
+    return axios.post(`/products`, model ).then(response => {
         return {
             
             isOk: true,
@@ -32,8 +36,12 @@ export async function GetProduct(id: string) {
         })
 }
 
-export async function DeleteProduct(ids: string[]) {
-    return axios.post(`/remove-products`, ids).then(response => {
+export async function DeleteProduct(ids: string[] ) {
+    const model : ProductDeletingModel =
+        {
+            ids: ids
+        };
+    return axios.post(`/remove-products`, model).then(response => {
         return GetProducts();
         // return {
         //     isOk: true,
@@ -47,7 +55,7 @@ export async function DeleteProduct(ids: string[]) {
     });
 }
 
-export async function InsertProduct(model: ProductViewModel) {
+export async function InsertProduct(model: ProductSavingModel) {
     return axios.post(`/product`, model).then(response => {
         
         return {
