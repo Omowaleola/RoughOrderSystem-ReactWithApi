@@ -11,7 +11,7 @@ Run API
 
 
 UI
-
+npm install to generate node modules
 Run UI (npm start)
 
 Tests
