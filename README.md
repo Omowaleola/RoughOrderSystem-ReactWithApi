@@ -8,7 +8,6 @@
 * git
 
 ## IDE
-
 * Rider (UI and API)
 * SQL Server Management Studio (SSMS)
 * Visual Studio (Generate Universe base testing structure)
