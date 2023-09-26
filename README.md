@@ -2,20 +2,20 @@
 
 ## Tech Stack
 
-SQL (Database)
-React Typescript (UI)
-.Net API- C#
-git
+* SQL (Database)
+* React Typescript (UI)
+* Net API- C#
+* git
 
 ## IDE
 
-Rider (UI and API)
-SQL Server Management Studio (SSMS)
-Visual Studio (Generate Universe base testing structure)
+* Rider (UI and API)
+* SQL Server Management Studio (SSMS)
+* Visual Studio (Generate Universe base testing structure)
 
 ## Setup
 
-*Create database in SSMS and use Sql File to create tables and populate the tables
+* Create database in SSMS and use Sql File to create tables and populate the tables
 * Open API in Rider.
 * Change connection string to name of database (in the appsettings.Development.json)
 * Make sure run configuration is set to ProjectAPI then run the program. You should get a webpage that shows the API swagger UI.
