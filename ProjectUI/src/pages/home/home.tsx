@@ -20,7 +20,7 @@ export default function Home() {
     }
     const productTile = (data) => {
         return (
-            <div>
+            <div title={data.description}>
                 <h5 className="centerText">{data.name}</h5>
                 <h6 className="centerText">R {data.price}</h6>
             </div>);
